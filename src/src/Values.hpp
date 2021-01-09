@@ -2,7 +2,6 @@
 #define Value_HPP
 #include "Config.hpp"
 #include "Observer.hpp"
-
 enum ParametrIndex {
 
   MOTOR_ENABLED = 0,

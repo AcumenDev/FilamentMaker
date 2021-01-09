@@ -3,7 +3,7 @@
 #include "BasicStepperDriver.h"
 #include "Config.hpp"
 #include "Observer.hpp"
-#include <Arduino.h>
+
 
 #define RPM 250
 #define MICROSTEP 1
@@ -70,7 +70,6 @@ void Motor::event(int index, int value) {
     }
   } else if (ParametrIndex::MOTOR_SPEED == index) {
     if (values->get(ParametrIndex::MOTOR_ENABLED)) {
-      //  motor.disable();
       run(value);
     }
   }

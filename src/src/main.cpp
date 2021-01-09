@@ -1,34 +1,32 @@
-#include <Arduino.h>
 #include "Values.hpp"
-
 #include "Display.hpp"
 #include "Motor.hpp"
+#include "TemperatureSensor.hpp"
 
 Values values;
 Display display(&values);
 Motor motor(&values);
+TemperatureSensor temperatureSensor;
 
-int lastUpdate = 0;
+unsigned long currentMillis = 0;
+
 
 void setup() {
-
-  // myEnc.write(RPM);
   Serial.begin(9600);
-  Serial.println("Start");
-  Serial.println("init start");
-  // motor.setSpeedProfile(BasicStepperDriver::LINEAR_SPEED, 5000, 2000);
-  // motor.setSpeedProfile(BasicStepperDriver::LINEAR_SPEED, 5000, 5000);
-  /// motor.begin(RPM, MICROSTEP);
-  // motor.setEnableActiveState(LOW);
+  Serial.println("[Main] Start");
+  Serial.println("[Main] Init start");
   values.addObserver(&motor);
 
   motor.init();
   display.init();
-  Serial.println("init end");
+  temperatureSensor.init();
+
+  Serial.println("[Main] Init end");
 }
-long oldPosition = -999;
 
 void loop() {
+  currentMillis = millis();
   motor.update();
   display.update();
+  temperatureSensor.update(currentMillis);
 }
