@@ -2,12 +2,24 @@
 #define Value_HPP
 #include "Config.hpp"
 #include "Observer.hpp"
+////todo отвязать меню от параметров
 enum ParametrIndex {
 
   MOTOR_ENABLED = 0,
-  MOTOR_SPEED = 1
-
+  MOTOR_SPEED = 1,
+  HEATER_ENABLED = 2,
+  HEATER_TEMPERATURE = 3
 };
+
+enum SettingsType { BOOL = 0, INT = 1, FLOAT = 2 };
+// названия параметров
+const char *settingsNames[MENU_SETTINGS_AMOUNT] = {"Run", "Speed", "Heater",
+                                                   "Temp"};
+
+//типы параметров 0 - bool 1- int
+const SettingsType settingsType[MENU_SETTINGS_AMOUNT] = {
+    SettingsType::BOOL, SettingsType::INT, SettingsType::BOOL,
+    SettingsType::FLOAT};
 
 class Values {
 private:
@@ -32,6 +44,8 @@ public:
 Values::Values(/* args */) {
   vals[MOTOR_ENABLED] = 0;
   vals[MOTOR_SPEED] = 250;
+  vals[HEATER_ENABLED] = 0;
+  vals[HEATER_TEMPERATURE] = 240;
 }
 
 Values::~Values() {}

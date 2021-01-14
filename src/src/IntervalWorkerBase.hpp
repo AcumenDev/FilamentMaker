@@ -6,16 +6,18 @@
 class IntervalWorkerBase {
 
   unsigned long _prev_ms = 0;
+
+protected:
   int _interval = 0;
 
 public:
   IntervalWorkerBase(int interval);
-  virtual void work( unsigned long currentMillis){};
-  virtual void update( unsigned long currentMillis);
+  virtual void work(const unsigned long &currentMillis){};
+  virtual void update(const unsigned long &currentMillis);
 
 protected:
-  bool isWorkTime(unsigned long currentMillis);
-  bool isWorkTime(unsigned long currentMillis, int interval);
+  bool isWorkTime(const unsigned long &currentMillis);
+  bool isWorkTime(const unsigned long &currentMillis, int interval);
 };
 
-#endif 
+#endif

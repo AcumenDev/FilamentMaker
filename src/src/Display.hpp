@@ -10,7 +10,7 @@
 
 #define MENU_LINES 2 // количество строк дисплея
 
-enum SettingsType { BOOL = 0, INT = 1 };
+
 
 class Display {
 private:
@@ -25,12 +25,7 @@ private:
   int8_t arrowPos = 0;
   int8_t screenPos = 0; // номер "экрана"
 
-  // названия параметров
-  const char *settingsNames[MENU_SETTINGS_AMOUNT] = {"Run", "Speed"};
 
-  //типы параметров 0 - bool 1- int
-  const SettingsType settingsType[MENU_SETTINGS_AMOUNT] = {SettingsType::BOOL,
-                                                           SettingsType::INT};
 
 public:
   Display(Values *values);

@@ -12,6 +12,8 @@ static const short PIN_DRIVER_EN = 2;
 
 static const short PIN_TEMPERATURE = A0;
 
-static const int MENU_SETTINGS_AMOUNT = 2; // количество настроек
+static const short PIN_PWM_HEAD = 9;
+
+static const int MENU_SETTINGS_AMOUNT = 4; // количество настроек
 
 #endif
