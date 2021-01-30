@@ -4,7 +4,7 @@
 #include "IntervalWorkerBase.hpp"
 #include "TemperatureValueHolder.hpp"
 #include <Arduino.h>
-
+#include <avdweb_AnalogReadFast.h>
 class TemperatureSensor : public IntervalWorkerBase {
 private:
   static const int B = 3950; // B-коэффициент
@@ -38,7 +38,7 @@ void TemperatureSensor::init(TemperatureValueHolder *temperatureValueHolder) {
   pinMode(PIN_TEMPERATURE, INPUT);
 }
 void TemperatureSensor::work(const unsigned long &currentMillis) {
-  int t = analogRead(PIN_TEMPERATURE);
+  int t = analogReadFast(PIN_TEMPERATURE);
   float tr = 1023.0 / t - 1;
   tr = SERIAL_R / tr;
 

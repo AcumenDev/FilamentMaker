@@ -71,13 +71,13 @@ void Display::update() {
     arrowPos = constrain(arrowPos, 0, MENU_SETTINGS_AMOUNT - 1); // ограничиваем
 
     increment = 0;
-    if (encoder.isRightH() && settingsType[arrowPos] == SettingsType::INT) {
+    if (encoder.isRightH() && settingsType[arrowPos] != SettingsType::BOOL) {
       increment = -1;
       needUpdate = true;
       values->set(arrowPos,
                   values->get(arrowPos) + increment); // меняем параметры
     }
-    if (encoder.isLeftH() && settingsType[arrowPos] == SettingsType::INT) {
+    if (encoder.isLeftH() && settingsType[arrowPos] != SettingsType::BOOL) {
       increment = 1;
       needUpdate = true;
       values->set(arrowPos,

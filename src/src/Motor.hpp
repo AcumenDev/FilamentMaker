@@ -2,9 +2,8 @@
 #define Motor_HPP
 #include "BasicStepperDriver.h"
 #include "Config.hpp"
+#include "MotorDriver.hpp"
 #include "Observer.hpp"
-
-
 #define RPM 250
 #define MICROSTEP 1
 
@@ -14,9 +13,11 @@ static const short MOTOR_STEPS = 200;
 
 class Motor : public Observer {
 private:
-  BasicStepperDriver motor = BasicStepperDriver(MOTOR_STEPS, PIN_DRIVER_DIR,
-                                                PIN_DRIVER_STEP, PIN_DRIVER_EN);
-
+  // BasicStepperDriver motor = BasicStepperDriver(MOTOR_STEPS, PIN_DRIVER_DIR,
+  //                                               PIN_DRIVER_STEP,
+  //                                               PIN_DRIVER_EN);
+  MotorDriver motor =
+      MotorDriver(PIN_DRIVER_STEP, PIN_DRIVER_DIR, PIN_DRIVER_EN);
   Values *values;
 
 public:
@@ -33,28 +34,27 @@ Motor::Motor(Values *values) { this->values = values; }
 Motor::~Motor() {}
 
 void Motor::init() {
-  motor.setEnableActiveState(LOW);
-  motor.disable();
-
+  // motor.setEnableActiveState(LOW);
+  // motor.disable();
+  motor.init();
+  Serial.print("[Motor] STEP_PULSE ");
+  Serial.println(STEP_PULSE(MOTOR_STEPS, 1, 250));
   if (values->get(ParametrIndex::MOTOR_ENABLED)) {
     run(values->get(ParametrIndex::MOTOR_SPEED));
   }
 }
 
 void Motor::update() {
- 
-  if (values->get(ParametrIndex::MOTOR_ENABLED)) {
-    motor.startMove(200);
-  } else {
-    motor.disable();
-  }
 
-  unsigned w1;
-  w1 = motor.nextAction();
-  if (w1 > 0) {
-  } else {
-    motor.disable();
-  } 
+  // unsigned wait_time_micros;
+  // wait_time_micros = motor.nextAction();
+  // if (wait_time_micros <= 0) {
+  //   // motor.disable();
+  // }
+
+  // if (wait_time_micros > 500) {
+  //   motor.startMove(200 * 1000);
+  // }
 }
 
 void Motor::event(int index, int value) {
@@ -64,7 +64,7 @@ void Motor::event(int index, int value) {
   Serial.println(value);
   if (index == ParametrIndex::MOTOR_ENABLED) {
     if (!value) {
-      motor.disable();
+      motor.stop();
     } else {
       run(values->get(ParametrIndex::MOTOR_SPEED));
     }
@@ -76,8 +76,9 @@ void Motor::event(int index, int value) {
 }
 
 void Motor::run(int rpm) {
-  motor.begin(rpm, MICROSTEP);
-  motor.startMove(200);
+  /*  motor.begin(rpm, MICROSTEP);
+   motor.startMove(200 * 1000); */
+  motor.start(rpm);
 }
 
 #endif

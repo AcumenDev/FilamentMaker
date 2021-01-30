@@ -7,10 +7,10 @@
 #include <Arduino.h>
 #include <PID_v1.h>
 
-class TemperaturePid : public IntervalWorkerBase, Observer {
+class TemperaturePid : public IntervalWorkerBase, public Observer {
 private:
   // Define Variables we'll be connecting to
-  double setPoint = 55, output;
+  double setPoint = 0, output;
 
   // Specify the links and initial tuning parameters
   const double Kp = 2, Ki = 5, Kd = 1;
@@ -36,6 +36,7 @@ TemperaturePid::~TemperaturePid() {}
 void TemperaturePid::init(TemperatureValueHolder *temperatureValueHolder) {
   pinMode(PIN_PWM_HEAD, OUTPUT);
   this->temperatureValueHolder = temperatureValueHolder;
+  setPoint = values->get(ParametrIndex::HEATER_TEMPERATURE);
   pid = new PID(temperatureValueHolder->get(), &output, &setPoint, Kp, Ki, Kd,
                 DIRECT);
   pid->SetSampleTime(_interval);
@@ -45,6 +46,7 @@ void TemperaturePid::work(const unsigned long &currentMillis) {}
 void TemperaturePid::update(const unsigned long &currentMillis) {
 
   if (!values->get(ParametrIndex::HEATER_ENABLED)) {
+    analogWrite(PIN_PWM_HEAD, 0);
     return;
   }
 
