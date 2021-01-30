@@ -10,8 +10,6 @@
 
 #define MENU_LINES 2 // количество строк дисплея
 
-
-
 class Display {
 private:
   LiquidCrystal_I2C lcd = LiquidCrystal_I2C(0x27, 16, 2);
@@ -128,44 +126,6 @@ void Display::render() {
     lcd.print(": ");
     lcd.print(values->get(MENU_LINES * screenPos + i));
   }
-  /*
-  if (encoder.isRight())
-  {
-      Serial.println("Right"); // если был поворот
-  }
-  if (encoder.isLeft())
-  {
-      Serial.println("Left");
-  }
-
-  if (encoder.isRightH())
-  {
-      Serial.println("Right holded"); // если было удержание + поворот
-  }
-  if (encoder.isLeftH())
-  {
-      Serial.println("Left holded");
-  }
-
-  if (encoder.isPress())
-  {
-      Serial.println("Press"); // нажатие на кнопку (+ дебаунс)
-  }
-  if (encoder.isRelease())
-  {
-      Serial.println("Release"); // отпускание кнопки (+ дебаунс)
-  }
-  if (encoder.isHolded())
-  {
-      Serial.println("Holded"); // если была удержана и энк не поворачивался
-  }
-
-  if (millis() - lastUpdate >= 1000)
-  {
-      lcd.setCursor(0, 1);
-      lcd.print(motor.getRPM());
-      lastUpdate = millis();
-  } */
 }
 
 #endif
