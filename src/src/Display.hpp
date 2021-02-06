@@ -8,7 +8,7 @@
 #include <Wire.h>
 //#define ENCODER_DO_NOT_USE_INTERRUPTS
 
-#define MENU_LINES 2 // количество строк дисплея
+#define MENU_LINES2 2 // количество строк дисплея
 
 class Display {
 private:
@@ -22,8 +22,6 @@ private:
 
   int8_t arrowPos = 0;
   int8_t screenPos = 0; // номер "экрана"
-
-
 
 public:
   Display(Values *values);
@@ -106,25 +104,25 @@ void Display::updateValue() {}
 
 void Display::render() {
   lcd.clear();
-  screenPos = arrowPos / MENU_LINES; // ищем номер экрана (0..3 - 0, 4..7 - 1)
+  screenPos = arrowPos / MENU_LINES2; // ищем номер экрана (0..3 - 0, 4..7 - 1)
 
-  for (byte i = 0; i < MENU_LINES; i++) { // для всех строк
+  for (byte i = 0; i < MENU_LINES2; i++) { // для всех строк
     lcd.setCursor(0, i);                  // курсор в начало
 
     // если курсор находится на выбранной строке
-    if (arrowPos == MENU_LINES * screenPos + i)
+    if (arrowPos == MENU_LINES2 * screenPos + i)
       lcd.write(126); // рисуем стрелку
     else
       lcd.write(32); // рисуем пробел
 
     // если пункты меню закончились, покидаем цикл for
-    if (MENU_LINES * screenPos + i == MENU_SETTINGS_AMOUNT)
+    if (MENU_LINES2 * screenPos + i == MENU_SETTINGS_AMOUNT)
       break;
 
     // выводим имя и значение пункта меню
-    lcd.print(settingsNames[MENU_LINES * screenPos + i]);
+    lcd.print(settingsNames[MENU_LINES2 * screenPos + i]);
     lcd.print(": ");
-    lcd.print(values->get(MENU_LINES * screenPos + i));
+    lcd.print(values->get(MENU_LINES2 * screenPos + i));
   }
 }
 
