@@ -23,8 +23,6 @@ void RunMenuItem::draw(LiquidCrystal_I2C &lcd) const {
   if (values->get(MOTOR_ENABLED)) {
     lcd.write(arrowTopId);
   }
-
-  // lcd.print(values->get(MOTOR_ENABLED) ? "true" : "false");
   lcd.print(values->get(MOTOR_SPEED));
 }
 
