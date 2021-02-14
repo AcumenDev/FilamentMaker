@@ -13,7 +13,7 @@ private:
   double setPoint = 0, output;
 
   // Specify the links and initial tuning parameters
-  const double Kp = 2, Ki = 5, Kd = 1;
+  const double Kp = 14, Ki = 0.93, Kd = 59.87;
   PID *pid;
   TemperatureValueHolder *temperatureValueHolder;
   Values *values;

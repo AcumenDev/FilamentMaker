@@ -16,4 +16,6 @@ static const short PIN_PWM_HEAD = 9;
 
 static const int MENU_SETTINGS_AMOUNT = 4; // количество настроек
 
+static const int MOTOR_MICRO_STEPS = 8;
+
 #endif

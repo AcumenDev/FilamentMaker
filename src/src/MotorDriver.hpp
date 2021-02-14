@@ -16,7 +16,7 @@ private:
 
 public:
   MotorDriver(short pinStep, short pinDir, short pinEn, int steps = 200,
-              int microsteps = 1);
+              int microsteps = MOTOR_MICRO_STEPS);
 
   virtual ~MotorDriver() {}
   void init();
@@ -56,7 +56,7 @@ void MotorDriver::stop() {
 }
 void MotorDriver::tickMotor() {
   digitalWrite(_pinStep, 1);
-  delayMicroseconds(2);
+  delayMicroseconds(4);
   digitalWrite(_pinStep, 0);
 }
 
