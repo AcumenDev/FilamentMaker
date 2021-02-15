@@ -29,7 +29,9 @@ void RunMenuItem::draw(LiquidCrystal_I2C &lcd) const {
 void RunMenuItem::event(Event event) const {
   switch (event) {
   case Event::CLICK:
-    values->set(MOTOR_ENABLED, values->get(MOTOR_ENABLED) == 1 ? 0 : 1);
+    if (!values->get(MOTOR_UNWIND_ENABLED)) {
+      values->set(MOTOR_ENABLED, values->get(MOTOR_ENABLED) == 1 ? 0 : 1);
+    }
     break;
   case Event::LEFT_HOLD: {
     values->set(MOTOR_SPEED, values->get(MOTOR_SPEED) + 1);

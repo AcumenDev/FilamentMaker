@@ -3,6 +3,8 @@
 #include <Arduino.h>
 #include <TimerOne.h>
 
+enum Direction { Forward, Backwards };
+
 class MotorDriver {
 private:
   static short _pinStep;
@@ -22,7 +24,7 @@ public:
   void init();
   void start(int rpm);
   void stop();
-
+  void setDirection(Direction dir);
   static long getInterval(int rpm, int microsteps, int steps);
 };
 
@@ -45,13 +47,12 @@ void MotorDriver::init() {
 
 void MotorDriver::start(int rpm) {
   Timer1.initialize(MotorDriver::getInterval(rpm, microsteps, steps));
-    digitalWrite(pinEn, LOW);
+  digitalWrite(pinEn, LOW);
 }
 
 void MotorDriver::stop() {
   Timer1.stop();
   digitalWrite(_pinStep, LOW);
-  digitalWrite(pinDir, LOW);
   digitalWrite(pinEn, HIGH);
 }
 void MotorDriver::tickMotor() {
@@ -63,6 +64,20 @@ void MotorDriver::tickMotor() {
 long MotorDriver::getInterval(int rpm, int microsteps, int steps) {
   return 60.0 * 1000000L / steps / microsteps / rpm;
 }
+
+void MotorDriver::setDirection(Direction dir) {
+  switch (dir) {
+  case Forward: {
+    digitalWrite(pinDir, LOW);
+    break;
+  }
+  case Backwards: {
+    digitalWrite(pinDir, HIGH);
+    break;
+  }
+  }
+}
+
 short MotorDriver::_pinStep;
 
 #endif

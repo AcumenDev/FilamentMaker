@@ -8,10 +8,9 @@
 #include "menu/MenuItem.hpp"
 #include <LiquidCrystal_I2C.h>
 #include <Wire.h>
-//#define ENCODER_DO_NOT_USE_INTERRUPTS
 
 static const short MENU_LINES = 2; // количество строк дисплея
-static const short MENU_ITEMS = 2; // количество опций
+static const short MENU_ITEMS = 3; // количество опций
 class Menu {
 private:
   LiquidCrystal_I2C lcd = LiquidCrystal_I2C(0x27, 16, 2);
@@ -55,9 +54,8 @@ void Menu::update(const unsigned long &currentMillis) {
   if (encoder.isTurn()) {
 
     Serial.println("[Display] isTurn or isPress");
-    int increment = 0; // локальная переменная направления
+    int increment = 0; 
 
-    // получаем направление
     if (encoder.isRight()) {
       increment = 1;
       needUpdate = true;
@@ -66,8 +64,8 @@ void Menu::update(const unsigned long &currentMillis) {
       increment = -1;
       needUpdate = true;
     }
-    arrowPos += increment; // двигаем курсор
-    arrowPos = constrain(arrowPos, 0, MENU_ITEMS - 1); // ограничиваем
+    arrowPos += increment;
+    arrowPos = constrain(arrowPos, 0, MENU_ITEMS - 1); 
   }
 
   if (encoder.isClick()) {
@@ -107,7 +105,7 @@ void Menu::render() {
     } else {
       lcd.write(32); // рисуем пробел
     }
-    // если пункты меню закончились, покидаем цикл for
+
     if (MENU_LINES * screenPos + i == MENU_ITEMS) {
       break;
     }
