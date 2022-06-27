@@ -23,7 +23,7 @@ public:
   void event(int index, int value) override;
 };
 
-TemperaturePid::TemperaturePid(Values *values) : IntervalWorkerBase(1000) {
+TemperaturePid::TemperaturePid(Values *values) : IntervalWorkerBase(500) {
   this->values = values;
 }
 

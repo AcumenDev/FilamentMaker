@@ -27,7 +27,7 @@ public:
   const float *getTemperature() const;
 };
 
-TemperatureSensor::TemperatureSensor() : IntervalWorkerBase(1000) {}
+TemperatureSensor::TemperatureSensor() : IntervalWorkerBase(500) {}
 
 TemperatureSensor::~TemperatureSensor() {}
 
